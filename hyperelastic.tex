@@ -389,30 +389,25 @@ Now substituting the values for the $\sigma_{rz}^{(i)} $ we can see the followin
 		\set_prop{2}{c}{b}
 		%
 		\boxed {
-		\begin{aligned}
-			\sigma_{rz}^{(1)} & = \getproperty{sigma}{1}\\
-			\setproperty{sigmaRz}{1}{\getproperty{sigma}{1}}
 			%
-			\sigma_{rz}^{(2)} & = \getproperty{sigma}{2}\\
-			\setproperty{sigmaRz}{2}{\getproperty{sigma}{2}}
-			% 
-			\sigma_{rz}^{(3)} & = \getproperty{sigma}{3}\\
-			& = \Big( 
-					\sigma^{'(1)}\getproperty{sigma_coeff}{v1} +
-					\sigma^{'(2)}\getproperty{sigma_coeff}{v2} 
-				\Big)(\getproperty{sigma_prime_coeff}{3}) + \sigma^{'(2)}\get_prop{2} +
-				\sigma^{'(1)}\get_prop{1} \\
-			%	
-			\setproperty{sigmaRz}{3}{%
+			\setproperty{sigma_rz}{1}{\getproperty{sigma}{1}}
+			\setproperty{sigma_rz}{2}{\getproperty{sigma}{2}}
+			\setproperty{sigma_rz}{3}{%
 				\Big( 
-				\sigma^{'(1)}\getproperty{sigma_coeff}{v1} +
-				\sigma^{'(2)}\getproperty{sigma_coeff}{v2} 
-				\Big)(\getproperty{sigma_prime_coeff}{3}) + \sigma^{'(2)}\get_prop{2} +
-				\sigma^{'(1)}\get_prop{1}			
+						\sigma^{'(1)}\getproperty{sigma_coeff}{v1} +
+						\sigma^{'(2)}\getproperty{sigma_coeff}{v2} 
+				\Big)(\getproperty{sigma_prime_coeff}{3}) + \sigma^{'(2)}\get_prop{2} + \sigma^{'(1)}\get_prop{1}			
 			}%
-			% & = \getproperty{sigmaRz}{3}		
-			%\setvalue{var1}{\the\getproperty{sigma}{1}}	
-		\end{aligned}
+			\begin{aligned}
+				\sigma_{rz}^{(1)} & = \getproperty{sigma_rz}{1}\\
+				%
+				%
+				\sigma_{rz}^{(2)} & = \getproperty{sigma_rz}{2}\\
+				%
+				% 
+				\sigma_{rz}^{(3)} & = \getproperty{sigma}{3}\\
+				& = \getproperty{sigma_rz}{3}	
+			\end{aligned}
 		} 		
 	\en
 	
@@ -433,15 +428,15 @@ Now substituting the values for the $\sigma_{rz}^{(i)} $ we can see the followin
 	\forcsvlist{\addwithcounting{rowcounter}{\myrowlist}}{r,\theta,z}
 	\forcsvlist{\addwithcounting{columncounter}{\mycolumnlist}}{r,\theta,z}
 
-	$
+	\begin{equation}
 		E = \int_{0}^{r}\int_{0}^{L}
 		\createMatrix{\sigma}{\myrowlist}{\mycolumnlist} :  \createMatrix{\epsilon}{\myrowlist}{\mycolumnlist} r dr dz
-	$ 
+	\end{equation} 
 		 
 	The above is an example of Hadamard product. Expanding and writing it shows the following.
-	$ 
+	\begin{equation}
 		E = \int_{0}^{r}\int_{0}^{L}\ContractedProduct{\myrowlist}{\mycolumnlist} r dr dz
-	$	
+	\end{equation}	
 	
 	Substituting the value of the various stresses and strains in each of the three regions we get the following.
 	
