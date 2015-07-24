@@ -1,23 +1,11 @@
-% !TEX TS-program = pdflatex
-% !TEX encoding = UTF-8 Unicode
-
-% This is a simple template for a LaTeX document using the "article" class.
-% See "book", "report", "letter" for other types of document.
 
 \documentclass[11pt]{article} % use larger type; default would be 10pt
 
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
 
-%%% Examples of Article customizations
-% These packages are optional, depending whether you want the features they provide.
-% See the LaTeX Companion or other references for full information.
-
 %%% PAGE DIMENSIONS
 \usepackage{geometry} % to change the page dimensions
 \geometry{a4paper} % or letterpaper (US) or a5paper or....
-% \geometry{margin=2in} % for example, change the margins to 2 inches all round
-% \geometry{landscape} % set up the page for landscape
-%   read geometry.pdf for detailed page layout information
 
 \usepackage{graphicx} % support the \includegraphics command and options
 
@@ -62,23 +50,26 @@
 \def \beg {\begin{equation}}
 \def \en {\end{equation}}
  
-\def\ece#1#2{
+\newcommand{\ece}[2]{
 	\expandafter#1\csname#2\endcsname
 }%
 
-\def\setproperty#1#2#3{%
+\newcommand{\setproperty}[3]{%
 	\ece \edef{#1@p#2}{#3}
 }%
-\def\setpropertyglobal#1#2#3{\ece\protected@xdef{#1@p#2}{#3}}%
 
-\def\getproperty#1#2{%
+\newcommand{\setpropertyglobal}[3]{%
+	\ece\protected@xdef{#1@p#2}{#3}
+}%
+
+\newcommand{\getproperty}[2]{%
   \expandafter\ifx\csname#1@p#2\endcsname\relax
   % then \empty
   \else \csname#1@p#2\endcsname
   \fi
 }%
 
-\def \printmylist#1{% have a way of looping through the list
+\def\printmylist#1{% have a way of looping through the list
 	\dolistloop{#1}
 }
 
@@ -400,13 +391,27 @@ Now substituting the values for the $\sigma_{rz}^{(i)} $ we can see the followin
 		\boxed {
 		\begin{aligned}
 			\sigma_{rz}^{(1)} & = \getproperty{sigma}{1}\\
-			\sigma_{rz}^{(2)} & = \getproperty{sigma}{2} \\ 
-			\sigma_{rz}^{(3)} & = \getproperty{sigma}{3} \\
+			\setproperty{sigmaRz}{1}{\getproperty{sigma}{1}}
+			%
+			\sigma_{rz}^{(2)} & = \getproperty{sigma}{2}\\
+			\setproperty{sigmaRz}{2}{\getproperty{sigma}{2}}
+			% 
+			\sigma_{rz}^{(3)} & = \getproperty{sigma}{3}\\
 			& = \Big( 
 					\sigma^{'(1)}\getproperty{sigma_coeff}{v1} +
 					\sigma^{'(2)}\getproperty{sigma_coeff}{v2} 
 				\Big)(\getproperty{sigma_prime_coeff}{3}) + \sigma^{'(2)}\get_prop{2} +
-				\sigma^{'(1)}\get_prop{1}
+				\sigma^{'(1)}\get_prop{1} \\
+			%	
+			\setproperty{sigmaRz}{3}{%
+				\Big( 
+				\sigma^{'(1)}\getproperty{sigma_coeff}{v1} +
+				\sigma^{'(2)}\getproperty{sigma_coeff}{v2} 
+				\Big)(\getproperty{sigma_prime_coeff}{3}) + \sigma^{'(2)}\get_prop{2} +
+				\sigma^{'(1)}\get_prop{1}			
+			}%
+			% & = \getproperty{sigmaRz}{3}		
+			%\setvalue{var1}{\the\getproperty{sigma}{1}}	
 		\end{aligned}
 		} 		
 	\en
@@ -430,11 +435,20 @@ Now substituting the values for the $\sigma_{rz}^{(i)} $ we can see the followin
 
 	$
 		E = \int_{0}^{r}\int_{0}^{L}
-		\createMatrix{\sigma}{\myrowlist}{\mycolumnlist} :  \createMatrix{\epsilon}{\myrowlist}{\mycolumnlist} dr dz
+		\createMatrix{\sigma}{\myrowlist}{\mycolumnlist} :  \createMatrix{\epsilon}{\myrowlist}{\mycolumnlist} r dr dz
 	$ 
 		 
-	
+	The above is an example of Hadamard product. Expanding and writing it shows the following.
 	$ 
-		E = \int_{0}^{r}\int_{0}^{L}\ContractedProduct{\myrowlist}{\mycolumnlist}
+		E = \int_{0}^{r}\int_{0}^{L}\ContractedProduct{\myrowlist}{\mycolumnlist} r dr dz
 	$	
+	
+	Substituting the value of the various stresses and strains in each of the three regions we get the following.
+	
+	For region 1.
+	
+	For region 2.
+	
+	For region 3.
+	
 \end{document}
